@@ -166,25 +166,21 @@ The `app/api/og/route.tsx` file should:
    - Create `lib/templates` folder
    - Create `public/logos` and `public/fonts` folders
 3. **Create type definitions** in `lib/types.ts`:
-
    - `TemplateProps` interface
    - `TemplateConfig` interface
    - `FontConfig` interface
 
 4. **Create default template** (`lib/templates/default.tsx`):
-
    - Simple, professional design that works for any client
    - Uses only Google Fonts (no custom fonts needed)
    - Clean layout with title, optional subtitle, optional author
 
 5. **Create template registry** (`lib/templates/index.ts`):
-
    - Import default template
    - Export templates object
    - Export getTemplate function
 
 6. **Create API route** (`app/api/og/route.tsx`):
-
    - Implement the logic described above
    - Handle all query parameters
    - Support custom fonts
