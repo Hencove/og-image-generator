@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useMemo } from 'react';
+import Image from 'next/image';
 import { getTemplateIds } from '@/lib/templates';
 
 export default function Home() {
@@ -10,17 +11,12 @@ export default function Home() {
   const [author, setAuthor] = useState('John Doe');
   const [date, setDate] = useState('');
   const [category, setCategory] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
-  const [availableTemplates, setAvailableTemplates] = useState<string[]>([]);
 
-  // Get available templates on mount
-  useEffect(() => {
-    const templates = getTemplateIds();
-    setAvailableTemplates(templates);
-  }, []);
+  // Get available templates - computed once on initial render
+  const availableTemplates = useMemo(() => getTemplateIds(), []);
 
-  // Update image URL when form values change
-  useEffect(() => {
+  // Compute image URL from current form values
+  const imageUrl = useMemo(() => {
     const params = new URLSearchParams();
     params.set('template', templateId);
     params.set('title', title);
@@ -29,7 +25,7 @@ export default function Home() {
     if (date) params.set('date', date);
     if (category) params.set('category', category);
 
-    setImageUrl(`/api/og?${params.toString()}`);
+    return `/api/og?${params.toString()}`;
   }, [templateId, title, subtitle, author, date, category]);
 
   const copyUrl = () => {
@@ -201,11 +197,13 @@ export default function Home() {
 
             <div className="overflow-hidden rounded-lg border border-zinc-200 dark:border-zinc-700">
               {title && imageUrl ? (
-                <img
+                <Image
                   src={imageUrl}
                   alt="OG Image Preview"
+                  width={1200}
+                  height={630}
                   className="w-full"
-                  style={{ aspectRatio: '1200/630' }}
+                  unoptimized
                 />
               ) : (
                 <div
@@ -246,7 +244,7 @@ export default function Home() {
 
             <p>
               Replace <code>YOUR_IMAGE_URL</code> with the full URL from the
-              "Generated URL" section above.
+              &ldquo;Generated URL&rdquo; section above.
             </p>
           </div>
         </div>
