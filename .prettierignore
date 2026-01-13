@@ -1,0 +1,32 @@
+# Ignore artifacts:
+_build
+coverage
+node_modules
+
+# Auto-generated manifests
+mix-manifest.json
+manifest.json
+
+# Deployment files
+.deployignore
+.deployinclude
+
+# Auto-generated and minified files
+composer.json
+package-lock.json
+package.json
+yarn.lock
+pnpm-lock.yaml
+*.min.js
+*.min.css
+*.map
+
+# Environment files
+.env*
+
+# OS files
+.DS_Store
+Thumbs.db
+.nova
+.claude
+.vscode
