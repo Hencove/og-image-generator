@@ -64,13 +64,41 @@ Templates **must use inline styles only**. The `@vercel/og` library does not sup
 - External stylesheets
 - Most advanced CSS (only flexbox + basic properties)
 
-Images and fonts must be:
+Images must be:
 
 - Absolute URLs, or
 - Base64 encoded, or
 - Loaded as ArrayBuffer
 
-Google Fonts work automatically when referenced in inline styles via `fontFamily`.
+#### Google Fonts Requirements
+
+**IMPORTANT**: Google Fonts are **NOT automatically loaded** by `@vercel/og`. You must explicitly fetch and load them:
+
+1. **Add fonts to template config** (`lib/templates/your-template.tsx`):
+
+   ```tsx
+   export const config: TemplateConfig = {
+     fonts: [
+       {
+         name: 'Font Name',
+         weights: [300, 400, 600, 700],
+       },
+     ],
+   };
+   ```
+
+2. **The API route automatically loads fonts** specified in template config via the `loadGoogleFont()` function in `app/api/og/route.tsx`. This function:
+   - Fetches font CSS from Google Fonts API
+   - Extracts the font file URL
+   - Downloads the font as ArrayBuffer
+   - Passes it to `ImageResponse` in the `fonts` option
+
+3. **Use the font in your template** with `fontFamily` in inline styles:
+   ```tsx
+   <div style={{ fontFamily: 'Font Name' }}>
+   ```
+
+**Note**: Every text element that needs the custom font must have `fontFamily` explicitly set in its inline styles. Setting it on a parent div does not reliably cascade in the edge runtime.
 
 ## Adding New Client Templates
 

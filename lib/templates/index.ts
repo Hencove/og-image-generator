@@ -1,5 +1,6 @@
 import { TemplateModule } from '../types';
 import DefaultTemplate, { config as defaultConfig } from './default';
+import CompliSolvTemplate, { config as compliSolvConfig } from './complisolv';
 
 /**
  * Registry of all available templates
@@ -9,6 +10,10 @@ const templates: Record<string, TemplateModule> = {
   default: {
     default: DefaultTemplate,
     config: defaultConfig,
+  },
+  complisolv: {
+    default: CompliSolvTemplate,
+    config: compliSolvConfig,
   },
 };
 

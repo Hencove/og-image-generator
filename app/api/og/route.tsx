@@ -6,6 +6,30 @@ import { getTemplate } from '@/lib/templates';
 export const runtime = 'edge';
 
 /**
+ * Load a Google Font for use in OG image generation
+ */
+async function loadGoogleFont(
+  font: string,
+  text: string,
+  weight: number = 400,
+): Promise<ArrayBuffer> {
+  const url = `https://fonts.googleapis.com/css2?family=${font}:wght@${weight}&text=${encodeURIComponent(text)}`;
+  const css = await (await fetch(url)).text();
+  const resource = css.match(
+    /src: url\((.+)\) format\('(opentype|truetype)'\)/,
+  );
+
+  if (resource) {
+    const response = await fetch(resource[1]);
+    if (response.status === 200) {
+      return await response.arrayBuffer();
+    }
+  }
+
+  throw new Error(`Failed to load font data for ${font}`);
+}
+
+/**
  * Main OG image generation endpoint
  * GET /api/og?template=default&title=Your+Title&subtitle=Optional+Subtitle
  */
@@ -39,8 +63,37 @@ export async function GET(request: NextRequest) {
     const template = getTemplate(templateId);
     const TemplateComponent = template.default;
 
+    // Load fonts if template specifies them
+    const fonts = [];
+    if (template.config.fonts) {
+      for (const fontConfig of template.config.fonts) {
+        // For CompliSolv and other templates using Darker Grotesque
+        // Load multiple weights
+        const weights = fontConfig.weights || [400];
+        for (const weight of weights) {
+          try {
+            const fontData = await loadGoogleFont(
+              fontConfig.name,
+              sanitizedTitle + (category || ''),
+              weight,
+            );
+            fonts.push({
+              name: fontConfig.name,
+              data: fontData,
+              weight,
+              style: 'normal',
+            });
+          } catch (error) {
+            console.error(
+              `Failed to load font ${fontConfig.name} weight ${weight}:`,
+              error,
+            );
+          }
+        }
+      }
+    }
+
     // Generate image using ImageResponse
-    // Note: @vercel/og automatically handles Google Fonts when used in JSX
     return new ImageResponse(
       <TemplateComponent
         title={sanitizedTitle}
@@ -52,6 +105,7 @@ export async function GET(request: NextRequest) {
       {
         width: 1200,
         height: 630,
+        fonts: fonts.length > 0 ? fonts : undefined,
         headers: {
           'Cache-Control': 'public, max-age=31536000, immutable',
         },
