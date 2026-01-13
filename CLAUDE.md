@@ -15,6 +15,9 @@ npm run dev      # Start development server on http://localhost:3000
 npm run build    # Production build
 npm start        # Start production server
 npm run lint     # Run ESLint
+npm run prettier # Check prettier formatting
+npm run prettier:fix # Write/Fix prettier formatting
+npm run check    # Check both prettier and linting
 ```
 
 The preview UI at `http://localhost:3000` lets you test templates interactively.
@@ -169,3 +172,7 @@ Clients add these meta tags to their `<head>`:
 ## Reference Documentation
 
 See [og-image-service-implementation-guide.md](./og-image-service-implementation-guide.md) for comprehensive implementation details and troubleshooting.
+
+## IMPORTANT NOTES
+
+Always run prettier on the files you've edited or created when you are done using `prettier files-here --write`

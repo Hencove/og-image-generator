@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "prettier": "prettier . --check",
+    "prettier:fix": "prettier . --write",
+    "check": "npm run lint && npm run prettier"
   },
   "dependencies": {
     "@vercel/og": "^0.8.6",
