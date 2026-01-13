@@ -35,22 +35,22 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
+    <div className="min-h-screen bg-hencove-white dark:bg-hencove-black">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-zinc-900 dark:text-zinc-50">
+          <h1 className="font-lora text-6xl font-normal text-hencove-black dark:text-hencove-white">
             OG Image Generator
           </h1>
-          <p className="mt-2 text-lg text-zinc-600 dark:text-zinc-400">
+          <p className="mt-2 font-manrope text-2xl font-light text-hencove-black dark:text-hencove-white">
             Preview and test your Open Graph image templates
           </p>
         </div>
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
           {/* Form Section */}
-          <div className="rounded-lg bg-white p-6 shadow-sm dark:bg-zinc-900">
-            <h2 className="mb-4 text-xl font-semibold text-zinc-900 dark:text-zinc-50">
+          <div className="rounded-lg bg-white p-6 shadow-sm dark:bg-zinc-800">
+            <h2 className="mb-4 font-manrope text-2xl font-bold text-hencove-black dark:text-hencove-white">
               Image Parameters
             </h2>
 
@@ -59,7 +59,7 @@ export default function Home() {
               <div>
                 <label
                   htmlFor="template"
-                  className="block text-sm font-medium text-zinc-700 dark:text-zinc-300"
+                  className="block font-manrope text-base font-bold text-hencove-black dark:text-hencove-white"
                 >
                   Template
                 </label>
@@ -67,7 +67,7 @@ export default function Home() {
                   id="template"
                   value={templateId}
                   onChange={(e) => setTemplateId(e.target.value)}
-                  className="mt-1 block w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-zinc-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
+                  className="mt-1 block w-full rounded-md border border-hencove-black bg-white px-3 py-2 font-manrope text-base text-hencove-black shadow-sm focus:border-hencove-blue focus:outline-none focus:ring-1 focus:ring-hencove-blue dark:border-zinc-600 dark:bg-zinc-700 dark:text-hencove-white"
                 >
                   {availableTemplates.map((id) => (
                     <option key={id} value={id}>
@@ -81,9 +81,9 @@ export default function Home() {
               <div>
                 <label
                   htmlFor="title"
-                  className="block text-sm font-medium text-zinc-700 dark:text-zinc-300"
+                  className="block font-manrope text-base font-bold text-hencove-black dark:text-hencove-white"
                 >
-                  Title <span className="text-red-500">*</span>
+                  Title <span className="text-hencove-pink">*</span>
                 </label>
                 <input
                   type="text"
@@ -92,7 +92,7 @@ export default function Home() {
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="Enter image title"
                   required
-                  className="mt-1 block w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-zinc-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
+                  className="mt-1 block w-full rounded-md border border-hencove-black bg-white px-3 py-2 font-manrope text-base text-hencove-black shadow-sm focus:border-hencove-blue focus:outline-none focus:ring-1 focus:ring-hencove-blue dark:border-zinc-600 dark:bg-zinc-700 dark:text-hencove-white dark:placeholder:text-zinc-400"
                 />
               </div>
 
@@ -100,7 +100,7 @@ export default function Home() {
               <div>
                 <label
                   htmlFor="subtitle"
-                  className="block text-sm font-medium text-zinc-700 dark:text-zinc-300"
+                  className="block font-manrope text-base font-bold text-hencove-black dark:text-hencove-white"
                 >
                   Subtitle
                 </label>
@@ -110,7 +110,7 @@ export default function Home() {
                   value={subtitle}
                   onChange={(e) => setSubtitle(e.target.value)}
                   placeholder="Optional subtitle"
-                  className="mt-1 block w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-zinc-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
+                  className="mt-1 block w-full rounded-md border border-hencove-black bg-white px-3 py-2 font-manrope text-base text-hencove-black shadow-sm focus:border-hencove-blue focus:outline-none focus:ring-1 focus:ring-hencove-blue dark:border-zinc-600 dark:bg-zinc-700 dark:text-hencove-white dark:placeholder:text-zinc-400"
                 />
               </div>
 
@@ -118,7 +118,7 @@ export default function Home() {
               <div>
                 <label
                   htmlFor="author"
-                  className="block text-sm font-medium text-zinc-700 dark:text-zinc-300"
+                  className="block font-manrope text-base font-bold text-hencove-black dark:text-hencove-white"
                 >
                   Author
                 </label>
@@ -128,7 +128,7 @@ export default function Home() {
                   value={author}
                   onChange={(e) => setAuthor(e.target.value)}
                   placeholder="Author name"
-                  className="mt-1 block w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-zinc-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
+                  className="mt-1 block w-full rounded-md border border-hencove-black bg-white px-3 py-2 font-manrope text-base text-hencove-black shadow-sm focus:border-hencove-blue focus:outline-none focus:ring-1 focus:ring-hencove-blue dark:border-zinc-600 dark:bg-zinc-700 dark:text-hencove-white dark:placeholder:text-zinc-400"
                 />
               </div>
 
@@ -136,7 +136,7 @@ export default function Home() {
               <div>
                 <label
                   htmlFor="date"
-                  className="block text-sm font-medium text-zinc-700 dark:text-zinc-300"
+                  className="block font-manrope text-base font-bold text-hencove-black dark:text-hencove-white"
                 >
                   Date
                 </label>
@@ -146,7 +146,7 @@ export default function Home() {
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
                   placeholder="e.g., January 13, 2026"
-                  className="mt-1 block w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-zinc-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
+                  className="mt-1 block w-full rounded-md border border-hencove-black bg-white px-3 py-2 font-manrope text-base text-hencove-black shadow-sm focus:border-hencove-blue focus:outline-none focus:ring-1 focus:ring-hencove-blue dark:border-zinc-600 dark:bg-zinc-700 dark:text-hencove-white dark:placeholder:text-zinc-400"
                 />
               </div>
 
@@ -154,7 +154,7 @@ export default function Home() {
               <div>
                 <label
                   htmlFor="category"
-                  className="block text-sm font-medium text-zinc-700 dark:text-zinc-300"
+                  className="block font-manrope text-base font-bold text-hencove-black dark:text-hencove-white"
                 >
                   Category
                 </label>
@@ -164,7 +164,7 @@ export default function Home() {
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
                   placeholder="e.g., Tutorial"
-                  className="mt-1 block w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-zinc-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
+                  className="mt-1 block w-full rounded-md border border-hencove-black bg-white px-3 py-2 font-manrope text-base text-hencove-black shadow-sm focus:border-hencove-blue focus:outline-none focus:ring-1 focus:ring-hencove-blue dark:border-zinc-600 dark:bg-zinc-700 dark:text-hencove-white dark:placeholder:text-zinc-400"
                 />
               </div>
 
@@ -172,7 +172,7 @@ export default function Home() {
               <button
                 type="button"
                 onClick={copyUrl}
-                className="w-full rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                className="w-full rounded-[10px] border-2 border-hencove-black bg-hencove-black px-4 py-2 font-manrope text-lg text-hencove-white transition-colors hover:border-hencove-blue hover:bg-hencove-blue focus:outline-none focus:ring-2 focus:ring-hencove-blue focus:ring-offset-2"
               >
                 Copy Image URL
               </button>
@@ -180,22 +180,22 @@ export default function Home() {
 
             {/* URL Display */}
             <div className="mt-4">
-              <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">
+              <label className="block font-manrope text-base font-bold text-hencove-black dark:text-hencove-white">
                 Generated URL
               </label>
-              <code className="mt-1 block overflow-x-auto rounded bg-zinc-100 p-2 text-xs text-zinc-800 dark:bg-zinc-800 dark:text-zinc-200">
+              <code className="mt-1 block overflow-x-auto rounded bg-hencove-tan p-2 font-manrope text-xs text-hencove-black dark:bg-zinc-700 dark:text-hencove-white">
                 {imageUrl}
               </code>
             </div>
           </div>
 
           {/* Preview Section */}
-          <div className="rounded-lg bg-white p-6 shadow-sm dark:bg-zinc-900">
-            <h2 className="mb-4 text-xl font-semibold text-zinc-900 dark:text-zinc-50">
+          <div className="rounded-lg bg-white p-6 shadow-sm dark:bg-zinc-800">
+            <h2 className="mb-4 font-manrope text-2xl font-bold text-hencove-black dark:text-hencove-white">
               Preview
             </h2>
 
-            <div className="overflow-hidden rounded-lg border border-zinc-200 dark:border-zinc-700">
+            <div className="overflow-hidden rounded-lg border-2 border-hencove-black dark:border-zinc-600">
               {title && imageUrl ? (
                 <Image
                   src={imageUrl}
@@ -207,7 +207,7 @@ export default function Home() {
                 />
               ) : (
                 <div
-                  className="flex items-center justify-center bg-zinc-100 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400"
+                  className="flex items-center justify-center bg-hencove-tan font-manrope text-base text-hencove-black dark:bg-zinc-700 dark:text-hencove-white"
                   style={{ aspectRatio: '1200/630' }}
                 >
                   Enter a title to see preview
@@ -215,7 +215,7 @@ export default function Home() {
               )}
             </div>
 
-            <div className="mt-4 text-sm text-zinc-600 dark:text-zinc-400">
+            <div className="mt-4 font-manrope text-xs text-hencove-black dark:text-zinc-400">
               <p>Dimensions: 1200 × 630 pixels</p>
               <p className="mt-1">Format: PNG</p>
             </div>
@@ -223,18 +223,22 @@ export default function Home() {
         </div>
 
         {/* Usage Instructions */}
-        <div className="mt-8 rounded-lg bg-white p-6 shadow-sm dark:bg-zinc-900">
-          <h2 className="mb-4 text-xl font-semibold text-zinc-900 dark:text-zinc-50">
+        <div className="mt-8 rounded-lg bg-white p-6 shadow-sm dark:bg-zinc-800">
+          <h2 className="mb-4 font-manrope text-2xl font-bold text-hencove-black dark:text-hencove-white">
             How to Use
           </h2>
 
-          <div className="prose prose-zinc dark:prose-invert">
-            <p>
+          <div className="space-y-4">
+            <p className="font-manrope text-base text-hencove-black dark:text-hencove-white">
               To use these OG images on your website, add the following meta
-              tags to your HTML <code>&lt;head&gt;</code>:
+              tags to your HTML{' '}
+              <code className="rounded bg-hencove-tan px-1 py-0.5 font-manrope text-xs dark:bg-zinc-700">
+                &lt;head&gt;
+              </code>
+              :
             </p>
 
-            <pre className="overflow-x-auto rounded bg-zinc-100 p-4 text-sm dark:bg-zinc-800">
+            <pre className="overflow-x-auto rounded bg-hencove-tan p-4 font-manrope text-xs text-hencove-black dark:bg-zinc-700 dark:text-hencove-white">
               {`<meta property="og:image" content="YOUR_IMAGE_URL" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
@@ -242,9 +246,13 @@ export default function Home() {
 <meta name="twitter:image" content="YOUR_IMAGE_URL" />`}
             </pre>
 
-            <p>
-              Replace <code>YOUR_IMAGE_URL</code> with the full URL from the
-              &ldquo;Generated URL&rdquo; section above.
+            <p className="font-manrope text-base text-hencove-black dark:text-hencove-white">
+              Replace{' '}
+              <code className="rounded bg-hencove-tan px-1 py-0.5 font-manrope text-xs dark:bg-zinc-700">
+                YOUR_IMAGE_URL
+              </code>{' '}
+              with the full URL from the &ldquo;Generated URL&rdquo; section
+              above.
             </p>
           </div>
         </div>
