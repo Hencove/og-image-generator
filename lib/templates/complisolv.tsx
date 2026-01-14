@@ -76,7 +76,8 @@ export default function CompliSolvTemplate({ title, category }: TemplateProps) {
               fontFamily: 'Darker Grotesque',
               color: '#ffffff',
               backgroundColor: 'rgba(30, 10, 10, 0.2)',
-              padding: '16px 32px 20px 32px',
+              border: '1px solid #ffffff',
+              padding: '10px 28px 16px 28px',
               borderRadius: '12px',
               letterSpacing: '0.05em',
             }}
