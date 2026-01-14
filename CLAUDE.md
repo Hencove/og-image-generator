@@ -179,6 +179,51 @@ Images are cached with `Cache-Control: public, max-age=31536000, immutable`:
 - Cached requests: <50ms (CDN serve)
 - Cache invalidation: Change query param (e.g., add `&v=2`)
 
+## Security Configuration
+
+### 1. Password-Protected Demo Page
+
+The demo page at the root URL can be password-protected using HTTP Basic Authentication.
+
+**Setup on Vercel**:
+
+1. Go to your Vercel project settings → Environment Variables
+2. Add: `DEMO_PASSWORD` with your desired password value
+3. Redeploy the application
+
+When enabled, users will be prompted for credentials when accessing the demo page. Any username is accepted; only the password is validated.
+
+**To disable**: Remove the `DEMO_PASSWORD` environment variable or leave it empty.
+
+### 2. Domain Allowlist for API
+
+The `/api/og` endpoint can be restricted to only serve requests from specific domains. This prevents unauthorized usage of your image generation service.
+
+**Setup on Vercel**:
+
+1. Go to your Vercel project settings → Environment Variables
+2. Add: `ALLOWED_DOMAINS` with comma-separated domain list (e.g., `example.com,anotherdomain.com`)
+3. Redeploy the application
+
+**How it works**:
+
+- Checks both `Referer` and `Origin` headers
+- Supports exact domain matches and subdomains (e.g., `example.com` allows `www.example.com`, `blog.example.com`)
+- Returns `403 Forbidden` for requests from non-allowed domains
+- If `ALLOWED_DOMAINS` is not set or empty, all domains are allowed
+
+**Local development**:
+
+Create a `.env.local` file (not committed to git):
+
+```bash
+# Optional: Password protect demo page
+DEMO_PASSWORD=your-secure-password
+
+# Optional: Restrict API to specific domains
+ALLOWED_DOMAINS=localhost,yourdomain.com
+```
+
 ## Client Integration
 
 Clients add these meta tags to their `<head>`:
@@ -197,10 +242,12 @@ Clients add these meta tags to their `<head>`:
 />
 ```
 
+**Note**: Make sure to add the client's domain to `ALLOWED_DOMAINS` if domain restrictions are enabled.
+
 ## Reference Documentation
 
 See [og-image-service-implementation-guide.md](./og-image-service-implementation-guide.md) for comprehensive implementation details and troubleshooting.
 
 ## IMPORTANT NOTES
 
-Always run prettier on the files you've edited or created when you are done using `prettier files-here --write`
+Always run prettier on the files you've edited or created when you are done using `prettier --write file1 file2 file3`

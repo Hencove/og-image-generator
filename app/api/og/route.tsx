@@ -30,11 +30,77 @@ async function loadGoogleFont(
 }
 
 /**
+ * Validate that the request comes from an allowed domain
+ * Returns true if allowed, false otherwise
+ */
+function isAllowedDomain(request: NextRequest): boolean {
+  const allowedDomains = process.env.ALLOWED_DOMAINS;
+
+  // If no domains are specified, allow all requests
+  if (!allowedDomains || allowedDomains.trim() === '') {
+    return true;
+  }
+
+  // Parse allowed domains list
+  const domains = allowedDomains.split(',').map((d) => d.trim().toLowerCase());
+
+  // Check Referer header (most common for meta tag requests)
+  const referer = request.headers.get('referer');
+  if (referer) {
+    try {
+      const refererUrl = new URL(referer);
+      const refererHost = refererUrl.hostname.toLowerCase();
+
+      // Check if referer hostname matches any allowed domain
+      if (
+        domains.some(
+          (domain) =>
+            refererHost === domain || refererHost.endsWith(`.${domain}`),
+        )
+      ) {
+        return true;
+      }
+    } catch {
+      // Invalid URL in referer
+    }
+  }
+
+  // Check Origin header (for CORS requests)
+  const origin = request.headers.get('origin');
+  if (origin) {
+    try {
+      const originUrl = new URL(origin);
+      const originHost = originUrl.hostname.toLowerCase();
+
+      if (
+        domains.some(
+          (domain) =>
+            originHost === domain || originHost.endsWith(`.${domain}`),
+        )
+      ) {
+        return true;
+      }
+    } catch {
+      // Invalid URL in origin
+    }
+  }
+
+  return false;
+}
+
+/**
  * Main OG image generation endpoint
  * GET /api/og?template=default&title=Your+Title&subtitle=Optional+Subtitle
  */
 export async function GET(request: NextRequest) {
   try {
+    // Validate domain if ALLOWED_DOMAINS is configured
+    if (!isAllowedDomain(request)) {
+      return new Response('Access denied: Domain not allowed', {
+        status: 403,
+      });
+    }
+
     const { searchParams } = request.nextUrl;
 
     // Extract query parameters
@@ -103,13 +169,15 @@ export async function GET(request: NextRequest) {
 
     // Generate image using ImageResponse
     return new ImageResponse(
-      <TemplateComponent
-        title={sanitizedTitle}
-        subtitle={subtitle}
-        author={author}
-        date={date}
-        category={category}
-      />,
+      (
+        <TemplateComponent
+          title={sanitizedTitle}
+          subtitle={subtitle}
+          author={author}
+          date={date}
+          category={category}
+        />
+      ),
       {
         width: 1200,
         height: 630,
@@ -124,21 +192,23 @@ export async function GET(request: NextRequest) {
 
     // Return a simple error image
     return new ImageResponse(
-      <div
-        style={{
-          display: 'flex',
-          width: '100%',
-          height: '100%',
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: '#f1f5f9',
-          fontSize: '48px',
-          fontWeight: 'bold',
-          color: '#ef4444',
-        }}
-      >
-        Error generating image
-      </div>,
+      (
+        <div
+          style={{
+            display: 'flex',
+            width: '100%',
+            height: '100%',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: '#f1f5f9',
+            fontSize: '48px',
+            fontWeight: 'bold',
+            color: '#ef4444',
+          }}
+        >
+          Error generating image
+        </div>
+      ),
       {
         width: 1200,
         height: 630,
