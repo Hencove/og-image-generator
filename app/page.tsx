@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import Image from 'next/image';
 import { getTemplateIds } from '@/lib/templates';
 
@@ -11,15 +11,9 @@ export default function Home() {
   const [author, setAuthor] = useState('John Doe');
   const [date, setDate] = useState('');
   const [category, setCategory] = useState('');
-  const [cacheKey, setCacheKey] = useState(0);
 
   // Get available templates - computed once on initial render
   const availableTemplates = useMemo(() => getTemplateIds(), []);
-
-  // Increment cache key whenever form values change (client-side only)
-  useEffect(() => {
-    setCacheKey((prev) => prev + 1);
-  }, [templateId, title, subtitle, author, date, category]);
 
   // Compute image URL from current form values
   const imageUrl = useMemo(() => {
@@ -30,17 +24,13 @@ export default function Home() {
     if (author) params.set('author', author);
     if (date) params.set('date', date);
     if (category) params.set('category', category);
-    // Add cache-busting parameter for development
-    params.set('_t', cacheKey.toString());
 
     return `/api/og?${params.toString()}`;
-  }, [templateId, title, subtitle, author, date, category, cacheKey]);
+  }, [templateId, title, subtitle, author, date, category]);
 
   const copyUrl = () => {
-    // Remove cache-busting parameter from copied URL
-    const url = new URL(`${window.location.origin}${imageUrl}`);
-    url.searchParams.delete('_t');
-    navigator.clipboard.writeText(url.toString());
+    const url = `${window.location.origin}${imageUrl}`;
+    navigator.clipboard.writeText(url);
     alert('URL copied to clipboard!');
   };
 
