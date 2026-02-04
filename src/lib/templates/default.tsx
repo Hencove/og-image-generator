@@ -33,8 +33,7 @@ export default function DefaultTemplate({
         width: '100%',
         height: '100%',
         backgroundColor: config.colors.background,
-        padding: '80px',
-        fontFamily: 'Inter, sans-serif',
+        padding: 80,
       }}
     >
       {/* Main content container */}
@@ -47,33 +46,34 @@ export default function DefaultTemplate({
         }}
       >
         {/* Title and subtitle section */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-          <h1
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <div
             style={{
-              fontSize: '64px',
+              display: 'flex',
+              fontSize: 64,
               fontWeight: 700,
-              lineHeight: '1.1',
+              lineHeight: 1.1,
               color: config.colors.text,
-              margin: 0,
-              maxWidth: '900px',
+              fontFamily: 'Inter, sans-serif',
             }}
           >
             {title}
-          </h1>
+          </div>
 
           {subtitle && (
-            <p
+            <div
               style={{
-                fontSize: '32px',
+                display: 'flex',
+                fontSize: 32,
                 fontWeight: 400,
-                lineHeight: '1.4',
+                lineHeight: 1.4,
                 color: config.colors.secondary,
-                margin: 0,
-                maxWidth: '800px',
+                marginTop: 24,
+                fontFamily: 'Inter, sans-serif',
               }}
             >
               {subtitle}
-            </p>
+            </div>
           )}
         </div>
 
@@ -82,18 +82,21 @@ export default function DefaultTemplate({
           <div
             style={{
               display: 'flex',
+              flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center',
               borderTop: `4px solid ${config.colors.primary}`,
-              paddingTop: '32px',
+              paddingTop: 32,
             }}
           >
             {author && (
               <div
                 style={{
-                  fontSize: '28px',
+                  display: 'flex',
+                  fontSize: 28,
                   fontWeight: 600,
                   color: config.colors.text,
+                  fontFamily: 'Inter, sans-serif',
                 }}
               >
                 {author}
@@ -103,8 +106,10 @@ export default function DefaultTemplate({
             {date && (
               <div
                 style={{
-                  fontSize: '24px',
+                  display: 'flex',
+                  fontSize: 24,
                   color: config.colors.secondary,
+                  fontFamily: 'Inter, sans-serif',
                 }}
               >
                 {date}
