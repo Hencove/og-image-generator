@@ -1,5 +1,7 @@
 # OG Image Generation Service - Implementation Guide for Claude Code
 
+> **Note**: This document was the original implementation guide for a Vercel/Next.js deployment. The project has since been migrated to **Cloudflare Workers**. For current architecture and instructions, see [CLAUDE.md](./CLAUDE.md) and [README.md](./README.md). This document is retained for historical reference.
+
 ## Project Overview
 
 This is an automated social share/OG image generation service for Hencove's client websites. The service accepts a template ID and post metadata, then dynamically generates properly-sized OG images (1200x630px) using client-specific design templates.

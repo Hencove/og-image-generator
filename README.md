@@ -6,9 +6,9 @@ Automated social share/OG image generation service for Hencove's client websites
 
 - Dynamic OG image generation from blog post titles and metadata
 - Support for multiple client templates (each with unique branding/design)
-- Built with Next.js 16 and `@vercel/og`
+- Built with Cloudflare Workers and `@cloudflare/pages-plugin-vercel-og`
 - Edge runtime for fast, global image generation
-- Automatic CDN caching via Vercel
+- Automatic CDN caching via Cloudflare
 - Easy integration with WordPress, Webflow, and static site generators
 - Web-based preview interface for testing templates
 
@@ -28,13 +28,14 @@ Run the development server:
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to access the preview interface.
+Open [http://localhost:8787](http://localhost:8787) to access the preview interface.
 
-### Production Build
+### Deployment
+
+Deploy to Cloudflare Workers:
 
 ```bash
-npm run build
-npm start
+npm run deploy
 ```
 
 ## Usage
@@ -47,9 +48,15 @@ The main image generation endpoint is available at:
 GET /api/og
 ```
 
+or
+
+```
+GET /og
+```
+
 #### Query Parameters
 
-- `template` (required): Template identifier (e.g., "default")
+- `template` (optional): Template identifier (e.g., "default", "complisolv"). Defaults to "default"
 - `title` (required): Blog post title
 - `subtitle` (optional): Subtitle or excerpt
 - `author` (optional): Author name
@@ -59,7 +66,7 @@ GET /api/og
 #### Example Request
 
 ```
-http://localhost:3000/api/og?template=default&title=How+to+Build+Better+Websites&subtitle=A+comprehensive+guide&author=John+Doe
+http://localhost:8787/api/og?template=default&title=How+to+Build+Better+Websites&subtitle=A+comprehensive+guide&author=John+Doe
 ```
 
 ### Integration
@@ -80,30 +87,27 @@ Replace `YOUR_IMAGE_URL` with the full URL to the API endpoint with your paramet
 
 ```
 og-image-generator/
-├── app/
-│   ├── api/
-│   │   └── og/
-│   │       └── route.tsx          # Main OG generation endpoint
-│   ├── layout.tsx                 # Root layout
-│   └── page.tsx                   # Preview UI
-├── lib/
-│   ├── templates/
-│   │   ├── index.ts              # Template registry
-│   │   └── default.tsx           # Default template
-│   └── types.ts                  # TypeScript types
-├── public/
-│   ├── fonts/                    # Custom font files
-│   └── logos/                    # Client logos
-└── package.json
+├── src/
+│   ├── index.tsx                    # Main Cloudflare Worker entry point
+│   └── lib/
+│       ├── templates/
+│       │   ├── index.ts             # Template registry
+│       │   ├── default.tsx          # Default template
+│       │   └── [client].tsx         # Client-specific templates
+│       └── types.ts                 # TypeScript types
+├── public/                          # Static assets
+├── wrangler.jsonc                   # Cloudflare Workers config
+├── package.json
+└── tsconfig.json
 ```
 
 ## Adding New Templates
 
-1. Create a new template file in `lib/templates/` (e.g., `client-name.tsx`)
+1. Create a new template file in `src/lib/templates/` (e.g., `client-name.tsx`)
 2. Export a `config` object with template metadata
 3. Export a default React component that accepts `TemplateProps`
-4. Use inline styles only (requirement of `@vercel/og`)
-5. Add the template to the registry in `lib/templates/index.ts`
+4. Use inline styles only (requirement of the image generation library)
+5. Add the template to the registry in `src/lib/templates/index.ts`
 
 ### Example Template
 
@@ -136,42 +140,26 @@ export default function MyTemplate({ title, subtitle }: TemplateProps) {
 }
 ```
 
-## Deployment
+## Environment Variables
 
-### Vercel (Recommended)
+Configure these via Cloudflare Workers secrets or `.dev.vars` for local development:
 
-1. Push code to GitHub
-2. Connect repository to Vercel
-3. Vercel auto-detects Next.js and deploys
-4. Configure custom domain if needed (e.g., `og.hencove.com`)
-
-Every push to main branch will automatically deploy.
-
-### Cost Estimates
-
-- **Vercel Free Tier**: 100GB bandwidth/month, ~100k generations/month
-- **Vercel Pro**: $20/month for higher usage
-
-For most Hencove client sites, the free tier should be sufficient.
+- `DEMO_PASSWORD` (optional): Password to protect the demo page with HTTP Basic Auth
+- `ALLOWED_DOMAINS` (optional): Comma-separated list of domains allowed to use the API
 
 ## Performance
 
 - **First request**: ~500ms to generate
 - **Cached requests**: <50ms (served from CDN)
 - **Cache duration**: 1 year (immutable)
-- Images are automatically cached globally via Vercel CDN
+- Images are automatically cached globally via Cloudflare CDN
 
 ## Tech Stack
 
-- **Framework**: Next.js 16 (App Router)
-- **Image Generation**: `@vercel/og` library
-- **Runtime**: Edge runtime
-- **Styling**: Tailwind CSS 4
+- **Runtime**: Cloudflare Workers
+- **Image Generation**: `@cloudflare/pages-plugin-vercel-og`
 - **Language**: TypeScript
-
-## Documentation
-
-For detailed implementation information, see [og-image-service-implementation-guide.md](./og-image-service-implementation-guide.md).
+- **UI Library**: React (for template components)
 
 ## License
 

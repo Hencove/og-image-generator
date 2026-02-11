@@ -8,12 +8,9 @@
 # testing
 /coverage
 
-# next.js
-/.next/
-/out/
-
 # production
 /build
+/dist
 
 # misc
 *.pem
@@ -27,17 +24,12 @@ yarn-error.log*
 .env*.local
 .env
 
-# vercel
-.vercel
-
 # cloudflare
-.open-next
 .dev.vars
 .wrangler
 
 # typescript
 *.tsbuildinfo
-next-env.d.ts
 
 #---------------------------
 # npm files
