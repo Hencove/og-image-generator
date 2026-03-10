@@ -34,6 +34,49 @@ async function loadGoogleFont(
 }
 
 /**
+ * Load an Adobe Typekit font for use in OG image generation.
+ * Fetches the kit CSS, finds the matching @font-face rule, and returns
+ * the font file as an ArrayBuffer.
+ */
+async function loadTypekitFont(
+  kitUrl: string,
+  fontFamily: string,
+  weight: number = 400,
+): Promise<ArrayBuffer> {
+  // No browser UA — causes Typekit to serve opentype/truetype instead of woff2.
+  // satori (used by ImageResponse) only supports opentype/truetype ArrayBuffers.
+  const css = await (await fetch(kitUrl)).text();
+
+  const fontFaceRegex = /@font-face\s*\{([^}]+)\}/gi;
+  let match;
+
+  while ((match = fontFaceRegex.exec(css)) !== null) {
+    const block = match[1];
+    const familyMatch = block.match(/font-family:\s*["']?([^"';]+?)["']?\s*;/i);
+    const weightMatch = block.match(/font-weight:\s*(\d+)/i);
+
+    if (!familyMatch) continue;
+    const family = familyMatch[1].trim().toLowerCase();
+    const blockWeight = weightMatch ? parseInt(weightMatch[1]) : 400;
+
+    if (family.includes(fontFamily.toLowerCase()) && blockWeight === weight) {
+      // Only opentype/truetype — woff/woff2 are not supported by satori
+      const urlMatch = block.match(
+        /url\(["']?([^"')]+)["']?\)\s*format\(["'](?:opentype|truetype)["']\)/i,
+      );
+      if (urlMatch) {
+        const response = await fetch(urlMatch[1]);
+        if (response.ok) return await response.arrayBuffer();
+      }
+    }
+  }
+
+  throw new Error(
+    `Failed to load Typekit font: ${fontFamily} weight ${weight}`,
+  );
+}
+
+/**
  * Validate that the request comes from an allowed domain
  */
 function isAllowedDomain(request: Request, env: Env): boolean {
@@ -159,7 +202,9 @@ async function handleOgRequest(request: Request, env: Env): Promise<Response> {
         const weights = fontConfig.weights || [400];
         for (const weight of weights) {
           try {
-            const fontData = await loadGoogleFont(fontConfig.name, weight);
+            const fontData = fontConfig.url
+              ? await loadTypekitFont(fontConfig.url, fontConfig.name, weight)
+              : await loadGoogleFont(fontConfig.name, weight);
             fonts.push({
               name: fontConfig.name,
               data: fontData,

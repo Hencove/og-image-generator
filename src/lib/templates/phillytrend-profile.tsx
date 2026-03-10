@@ -3,7 +3,6 @@ import { TemplateConfig, TemplateProps } from '../types';
 // Layout based on PhillyTrend article card:
 // - Circular image on the LEFT
 // - Category badge + name (with green bottom border) + company + role on the RIGHT
-// Font: Plus Jakarta Sans (substitute for Degular until Adobe font is available)
 
 export const config: TemplateConfig = {
   id: 'phillytrend-profile',
@@ -15,7 +14,8 @@ export const config: TemplateConfig = {
   },
   fonts: [
     {
-      name: 'Plus Jakarta Sans',
+      name: 'degular',
+      url: 'https://use.typekit.net/mcb8xty.css',
       weights: [400, 500, 600],
     },
   ],
@@ -56,7 +56,7 @@ export default function PhillyTrendProfileTemplate({
       >
         <span
           style={{
-            fontFamily: 'Plus Jakarta Sans',
+            fontFamily: 'degular',
             color: '#111',
             fontSize: '22px',
             fontWeight: 600,
@@ -137,7 +137,7 @@ export default function PhillyTrendProfileTemplate({
         >
           <span
             style={{
-              fontFamily: 'Plus Jakarta Sans',
+              fontFamily: 'degular',
               color: '#ffffff',
               fontSize: '72px',
               fontWeight: 600,
@@ -159,7 +159,7 @@ export default function PhillyTrendProfileTemplate({
           {subtitle && (
             <span
               style={{
-                fontFamily: 'Plus Jakarta Sans',
+                fontFamily: 'degular',
                 color: '#ffffff',
                 fontSize: '44px',
                 fontWeight: 500,
@@ -173,7 +173,7 @@ export default function PhillyTrendProfileTemplate({
           {author && (
             <span
               style={{
-                fontFamily: 'Plus Jakarta Sans',
+                fontFamily: 'degular',
                 color: '#ffffff',
                 fontSize: '36px',
                 fontWeight: 400,

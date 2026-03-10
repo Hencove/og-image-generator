@@ -3,7 +3,6 @@ import { TemplateConfig, TemplateProps } from '../types';
 // Layout:
 // - Left side (~480px): decorative photo filling full height, with transparent→black gradient overlay
 // - Right side: category badge (top), title + green bar (center), logo (bottom)
-// Font: Plus Jakarta Sans (substitute for Degular until Adobe font is available)
 
 export const config: TemplateConfig = {
   id: 'phillytrend-news',
@@ -15,7 +14,8 @@ export const config: TemplateConfig = {
   },
   fonts: [
     {
-      name: 'Plus Jakarta Sans',
+      name: 'degular',
+      url: 'https://use.typekit.net/mcb8xty.css',
       weights: [400, 500, 600],
     },
   ],
@@ -100,7 +100,7 @@ export default function PhillyTrendNewsTemplate({
           >
             <span
               style={{
-                fontFamily: 'Plus Jakarta Sans',
+                fontFamily: 'degular',
                 color: '#111111',
                 fontSize: '22px',
                 fontWeight: 600,
@@ -121,7 +121,7 @@ export default function PhillyTrendNewsTemplate({
         >
           <span
             style={{
-              fontFamily: 'Plus Jakarta Sans',
+              fontFamily: 'degular',
               color: '#ffffff',
               fontSize: '64px',
               fontWeight: 600,
