@@ -56,7 +56,7 @@ function ProfileLayout({
   subtitle,
   author,
   category,
-  imageUrl,
+  headshotUrl,
 }: TemplateProps) {
   return (
     <div
@@ -119,9 +119,9 @@ function ProfileLayout({
           backgroundColor: BG,
         }}
       >
-        {imageUrl && (
+        {headshotUrl && (
           <img
-            src={imageUrl}
+            src={headshotUrl}
             width={PROFILE_IMAGE_SIZE}
             height={PROFILE_IMAGE_SIZE}
             style={{ objectFit: 'cover' }}

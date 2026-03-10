@@ -8,6 +8,7 @@ export interface TemplateProps {
   date?: string;
   category?: string;
   imageUrl?: string;
+  headshotUrl?: string;
 }
 
 /**

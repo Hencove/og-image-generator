@@ -176,6 +176,7 @@ async function handleOgRequest(request: Request, env: Env): Promise<Response> {
     const date = url.searchParams.get('date') || undefined;
     const category = url.searchParams.get('category') || undefined;
     const imageUrl = url.searchParams.get('imageUrl') || undefined;
+    const headshotUrl = url.searchParams.get('headshotUrl') || undefined;
 
     if (!title) {
       return new Response('Missing required parameter: title', { status: 400 });
@@ -237,6 +238,7 @@ async function handleOgRequest(request: Request, env: Env): Promise<Response> {
         date={date}
         category={category}
         imageUrl={imageUrl}
+        headshotUrl={headshotUrl}
       />,
       {
         width: 1200,
@@ -403,6 +405,10 @@ function getDemoPageHtml(): string {
       <label for="imageUrl">Image URL</label>
       <input type="text" id="imageUrl" placeholder="https://example.com/photo.jpg">
     </div>
+    <div class="form-group">
+      <label for="headshotUrl">Headshot URL</label>
+      <input type="text" id="headshotUrl" placeholder="https://example.com/headshot.jpg">
+    </div>
   </div>
 
   <button onclick="generateImage()">Generate Preview</button>
@@ -439,6 +445,9 @@ function getDemoPageHtml(): string {
 
       const imageUrl = document.getElementById('imageUrl').value;
       if (imageUrl) params.set('imageUrl', imageUrl);
+
+      const headshotUrl = document.getElementById('headshotUrl').value;
+      if (headshotUrl) params.set('headshotUrl', headshotUrl);
 
       const url = '/api/og?' + params.toString();
       document.getElementById('preview').src = url;
