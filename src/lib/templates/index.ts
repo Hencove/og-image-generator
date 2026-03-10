@@ -4,6 +4,9 @@ import CompliSolvTemplate, { config as compliSolvConfig } from './complisolv';
 import PhillyTrendProfileTemplate, {
   config as phillyTrendProfileConfig,
 } from './phillytrend-profile';
+import PhillyTrendNewsTemplate, {
+  config as phillyTrendNewsConfig,
+} from './phillytrend-news';
 
 /**
  * Registry of all available templates
@@ -21,6 +24,10 @@ const templates: Record<string, TemplateModule> = {
   'phillytrend-profile': {
     default: PhillyTrendProfileTemplate,
     config: phillyTrendProfileConfig,
+  },
+  'phillytrend-news': {
+    default: PhillyTrendNewsTemplate,
+    config: phillyTrendNewsConfig,
   },
 };
 
