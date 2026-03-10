@@ -1,12 +1,9 @@
 import { TemplateModule } from '../types';
 import DefaultTemplate, { config as defaultConfig } from './default';
 import CompliSolvTemplate, { config as compliSolvConfig } from './complisolv';
-import PhillyTrendProfileTemplate, {
-  config as phillyTrendProfileConfig,
-} from './phillytrend-profile';
-import PhillyTrendNewsTemplate, {
-  config as phillyTrendNewsConfig,
-} from './phillytrend-news';
+import PhillyTrendTemplate, {
+  config as phillyTrendConfig,
+} from './phillytrend';
 
 /**
  * Registry of all available templates
@@ -21,13 +18,9 @@ const templates: Record<string, TemplateModule> = {
     default: CompliSolvTemplate,
     config: compliSolvConfig,
   },
-  'phillytrend-profile': {
-    default: PhillyTrendProfileTemplate,
-    config: phillyTrendProfileConfig,
-  },
-  'phillytrend-news': {
-    default: PhillyTrendNewsTemplate,
-    config: phillyTrendNewsConfig,
+  phillytrend: {
+    default: PhillyTrendTemplate,
+    config: phillyTrendConfig,
   },
 };
 
