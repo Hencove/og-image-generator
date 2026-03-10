@@ -7,6 +7,7 @@ export interface TemplateProps {
   author?: string;
   date?: string;
   category?: string;
+  imageUrl?: string;
 }
 
 /**

@@ -1,6 +1,9 @@
 import { TemplateModule } from '../types';
 import DefaultTemplate, { config as defaultConfig } from './default';
 import CompliSolvTemplate, { config as compliSolvConfig } from './complisolv';
+import PhillyTrendProfileTemplate, {
+  config as phillyTrendProfileConfig,
+} from './phillytrend-profile';
 
 /**
  * Registry of all available templates
@@ -14,6 +17,10 @@ const templates: Record<string, TemplateModule> = {
   complisolv: {
     default: CompliSolvTemplate,
     config: compliSolvConfig,
+  },
+  'phillytrend-profile': {
+    default: PhillyTrendProfileTemplate,
+    config: phillyTrendProfileConfig,
   },
 };
 

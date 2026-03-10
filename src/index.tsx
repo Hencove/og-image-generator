@@ -132,6 +132,7 @@ async function handleOgRequest(request: Request, env: Env): Promise<Response> {
     const author = url.searchParams.get('author') || undefined;
     const date = url.searchParams.get('date') || undefined;
     const category = url.searchParams.get('category') || undefined;
+    const imageUrl = url.searchParams.get('imageUrl') || undefined;
 
     if (!title) {
       return new Response('Missing required parameter: title', { status: 400 });
@@ -190,6 +191,7 @@ async function handleOgRequest(request: Request, env: Env): Promise<Response> {
         author={author}
         date={date}
         category={category}
+        imageUrl={imageUrl}
       />,
       {
         width: 1200,
@@ -352,6 +354,10 @@ function getDemoPageHtml(): string {
       <label for="category">Category</label>
       <input type="text" id="category" placeholder="e.g., Blog, News, Case Study">
     </div>
+    <div class="form-group">
+      <label for="imageUrl">Image URL</label>
+      <input type="text" id="imageUrl" placeholder="https://example.com/photo.jpg">
+    </div>
   </div>
 
   <button onclick="generateImage()">Generate Preview</button>
@@ -385,6 +391,9 @@ function getDemoPageHtml(): string {
 
       const category = document.getElementById('category').value;
       if (category) params.set('category', category);
+
+      const imageUrl = document.getElementById('imageUrl').value;
+      if (imageUrl) params.set('imageUrl', imageUrl);
 
       const url = '/api/og?' + params.toString();
       document.getElementById('preview').src = url;
